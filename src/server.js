@@ -1,14 +1,15 @@
-import express from "express";
+import express from 'express'
 
-const app = express();
+const app = express()
 
-const hostname = "localhost";
-const port = 3000;
+const hostname = 'localhost'
+const port = 3000
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.get('/', (req, res) => {
+  res.end('<h1>Hello World!</h1><hr>')
+})
 
 app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+  // eslint-disable-next-line no-console
+  console.log(`Server running at http://${hostname}:${port}/`)
+})
