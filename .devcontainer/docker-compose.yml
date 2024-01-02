@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/base:ubuntu-22.04
+    container_name: trello-clone-api
+    restart: always
+    volumes:
+      - ../:/workspace:cached
+      - ~/.ssh:/home/vscode/.ssh:cached
+      - ~/.gitconfig:/home/vscode/.gitconfig:cached
+    command: sleep infinity
