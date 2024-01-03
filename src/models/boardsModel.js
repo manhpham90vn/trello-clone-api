@@ -1,4 +1,5 @@
 import Joi from 'joi'
+import { ObjectId } from 'mongodb'
 import { GET_DB } from '~/config/mongodb'
 import { OBJECT_ID_RULE, OBJECT_ID_RULE_MESSAGE } from '~/utils/validators'
 
@@ -28,7 +29,7 @@ const findOneById = async (id) => {
   try {
     const board = GET_DB()
       .collection(BOARD_COLLECTION_NAME)
-      .findOne({ _id: id })
+      .findOne({ _id: new ObjectId(id) })
     return board
   } catch (error) {
     throw new Error(error)
