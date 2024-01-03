@@ -1,11 +1,9 @@
-const MONGODB_URI = process.env.MONGODB_URI
-const MONGODB_DB = process.env.DATABASE_NAME
-
 import { MongoClient, ServerApiVersion } from 'mongodb'
+import { env } from '~/config/environment'
 
 let databaseInstance = null
 
-const mongoclientInstance = new MongoClient(MONGODB_URI, {
+const mongoclientInstance = new MongoClient(env.MONGODB_URI, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -15,7 +13,7 @@ const mongoclientInstance = new MongoClient(MONGODB_URI, {
 
 export const CONNECT_DB = async () => {
   await mongoclientInstance.connect()
-  databaseInstance = mongoclientInstance.db(MONGODB_DB)
+  databaseInstance = mongoclientInstance.db(env.DATABASE_NAME)
 }
 
 export const GET_DB = () => {
@@ -23,4 +21,8 @@ export const GET_DB = () => {
     throw new Error('Must connect to database first!')
   }
   return databaseInstance
+}
+
+export const DISCONNECT_DB = async () => {
+  await mongoclientInstance.close()
 }

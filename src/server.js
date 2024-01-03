@@ -1,21 +1,25 @@
+import exitHook from 'async-exit-hook'
+
 import express from 'express'
-import { CONNECT_DB, GET_DB } from './config/mongodb'
+import { env } from '~/config/environment'
+import { CONNECT_DB, DISCONNECT_DB } from '~/config/mongodb'
 
 const START_SERVER = () => {
   const app = express()
 
-  const hostname = 'localhost'
-  const port = 3000
-
   app.get('/', async (req, res) => {
-    // eslint-disable-next-line no-console
-    console.log(await GET_DB().listCollections().toArray())
     res.end('<h1>Hello World!</h1><hr>')
   })
 
-  app.listen(port, hostname, () => {
+  app.listen(env.APP_PORT, env.APP_HOST, () => {
     // eslint-disable-next-line no-console
-    console.log(`Server running at http://${hostname}:${port}/`)
+    console.log(`Server running at http://${env.APP_HOST}:${env.APP_PORT}/`)
+  })
+
+  exitHook(() => {
+    // eslint-disable-next-line no-console
+    console.log('Disconnecting from database server...')
+    DISCONNECT_DB()
   })
 }
 
