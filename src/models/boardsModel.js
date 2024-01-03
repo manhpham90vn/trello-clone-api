@@ -16,9 +16,18 @@ const BOARD_COLLECTION_SCHEMA = Joi.object({
   _destroy: Joi.boolean().default(false)
 })
 
+const validateBeforCreate = async (data) => {
+  return await BOARD_COLLECTION_SCHEMA.validateAsync(data, {
+    abortEarly: false
+  })
+}
+
 const createBoard = async (data) => {
   try {
-    const board = GET_DB().collection(BOARD_COLLECTION_NAME).insertOne(data)
+    const validateData = await validateBeforCreate(data)
+    const board = GET_DB()
+      .collection(BOARD_COLLECTION_NAME)
+      .insertOne(validateData)
     return board
   } catch (error) {
     throw new Error(error)
