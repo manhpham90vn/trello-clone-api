@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import exitHook from 'async-exit-hook'
 
 import express from 'express'
@@ -12,12 +13,10 @@ const START_SERVER = () => {
   })
 
   app.listen(env.APP_PORT, env.APP_HOST, () => {
-    // eslint-disable-next-line no-console
     console.log(`Server running at http://${env.APP_HOST}:${env.APP_PORT}/`)
   })
 
   exitHook(() => {
-    // eslint-disable-next-line no-console
     console.log('Disconnecting from database server...')
     DISCONNECT_DB()
   })
@@ -25,14 +24,11 @@ const START_SERVER = () => {
 
 ;(async () => {
   try {
-    // eslint-disable-next-line no-console
     console.log('Connecting to database server...')
     CONNECT_DB()
-    // eslint-disable-next-line no-console
     console.log('Connected successfully to database server')
     START_SERVER()
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.log(error)
     process.exit(1)
   }
