@@ -14,7 +14,15 @@
         "GitHub.copilot-chat",
         "GitHub.copilot",
         "eamodio.gitlens"
-      ]
+      ],
+      "settings": {
+        "terminal.integrated.shell.osx": "/bin/zsh",
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": true
+        }
+      }
     }
   },
   "features": {
