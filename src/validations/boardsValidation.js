@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import Joi from 'joi'
 import ApiError from '~/utils/ApiError'
+import { BOARD_TYPES } from '~/utils/Constants'
 
 const createBoard = async (req, res, next) => {
   const condition = Joi.object({
@@ -26,7 +27,10 @@ const createBoard = async (req, res, next) => {
           'Description must be less than or equal to 256 characters long',
         'any.required': 'Description is required',
         'string.trim': 'Description must not have white spaces'
-      })
+      }),
+    type: Joi.string()
+      .valid(BOARD_TYPES.PUBLIC, BOARD_TYPES.PRIVATE)
+      .default(BOARD_TYPES.PUBLIC)
   })
   try {
     await condition.validateAsync(req.body, { abortEarly: false })

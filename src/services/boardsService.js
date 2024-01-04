@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
+import { cloneDeep } from 'lodash'
 import { boardsModel } from '~/models/boardsModel'
 import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/utils'
@@ -20,10 +21,17 @@ const createBoard = async (body) => {
 const getBoardDetail = async (id) => {
   try {
     const board = await boardsModel.getBoardDetail(id)
-    if (!board) {
+    const result = cloneDeep(board)
+    result.columns.forEach((column) => {
+      column.cards = result.cards.filter(
+        (card) => card.columnId.toString() === column._id.toString()
+      )
+    })
+    delete result.cards
+    if (!result) {
       throw new ApiError(StatusCodes.NOT_FOUND, 'Board not found!')
     }
-    return board
+    return result
   } catch (error) {
     throw new Error(error)
   }
