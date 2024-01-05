@@ -37,7 +37,21 @@ const detail = async (id) => {
   }
 }
 
+const update = async (id, body) => {
+  try {
+    const data = {
+      ...body,
+      updatedAt: Date.now()
+    }
+    const board = await boardsModel.update(id, data)
+    return board
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export const boardsService = {
   create,
-  detail
+  detail,
+  update
 }

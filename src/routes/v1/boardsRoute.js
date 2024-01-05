@@ -13,8 +13,6 @@ Router.route('/')
 
 Router.route('/:id')
   .get(boardsController.detail)
-  .put((req, res) => {
-    res.status(StatusCodes.OK).json({ message: 'API update board by id' })
-  })
+  .put(boardsValidation.update, boardsController.update)
 
 export const boardsRoute = Router

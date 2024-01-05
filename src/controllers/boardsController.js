@@ -19,7 +19,17 @@ const detail = async (req, res, next) => {
   }
 }
 
+const update = async (req, res, next) => {
+  try {
+    const board = await boardsService.update(req.params.id, req.body)
+    res.status(StatusCodes.OK).json(board)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const boardsController = {
   create,
-  detail
+  detail,
+  update
 }
