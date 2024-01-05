@@ -4,13 +4,13 @@ import { boardsModel } from '~/models/boardsModel'
 import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/utils'
 
-const createBoard = async (body) => {
+const create = async (body) => {
   try {
-    const newBoard = {
+    const newObj = {
       ...body,
       slug: slugify(body.title)
     }
-    const result = await boardsModel.createBoard(newBoard)
+    const result = await boardsModel.createBoard(newObj)
     const board = await boardsModel.findOneById(result.insertedId.toString())
     return board
   } catch (error) {
@@ -18,7 +18,7 @@ const createBoard = async (body) => {
   }
 }
 
-const getBoardDetail = async (id) => {
+const detail = async (id) => {
   try {
     const board = await boardsModel.getBoardDetail(id)
     if (!board) {
@@ -38,6 +38,6 @@ const getBoardDetail = async (id) => {
 }
 
 export const boardsService = {
-  createBoard,
-  getBoardDetail
+  create,
+  detail
 }
