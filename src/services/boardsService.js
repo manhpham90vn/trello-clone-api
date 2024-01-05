@@ -21,6 +21,9 @@ const createBoard = async (body) => {
 const getBoardDetail = async (id) => {
   try {
     const board = await boardsModel.getBoardDetail(id)
+    if (!board) {
+      throw new ApiError(StatusCodes.NOT_FOUND, 'Board not found!')
+    }
     const result = cloneDeep(board)
     result.columns.forEach((column) => {
       column.cards = result.cards.filter(
@@ -28,9 +31,6 @@ const getBoardDetail = async (id) => {
       )
     })
     delete result.cards
-    if (!result) {
-      throw new ApiError(StatusCodes.NOT_FOUND, 'Board not found!')
-    }
     return result
   } catch (error) {
     throw new Error(error)

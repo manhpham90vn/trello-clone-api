@@ -75,7 +75,7 @@ const getBoardDetail = async (id) => {
         }
       ])
       .toArray()
-    return board[0] || {}
+    return board[0] || null
   } catch (error) {
     throw new Error(error)
   }
