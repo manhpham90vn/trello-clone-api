@@ -5,7 +5,9 @@
   "initializeCommand": "./.devcontainer/initializeCommand.sh",
   "dockerComposeFile": "docker-compose.yml",
   "postCreateCommand": "./.devcontainer/postCreateCommand.sh",
-  "forwardPorts": [3000],
+  "forwardPorts": [
+    3000
+  ],
   "customizations": {
     "vscode": {
       "extensions": [
@@ -13,7 +15,8 @@
         "esbenp.prettier-vscode",
         "GitHub.copilot-chat",
         "GitHub.copilot",
-        "eamodio.gitlens"
+        "eamodio.gitlens",
+        "ms-azuretools.vscode-docker"
       ],
       "settings": {
         "terminal.integrated.shell.osx": "/bin/zsh",
@@ -41,7 +44,8 @@
       "version": "latest",
       "ppa": "false"
     },
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
   "remoteUser": "vscode"
 }
