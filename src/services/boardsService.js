@@ -1,6 +1,8 @@
 import { StatusCodes } from 'http-status-codes'
 import { cloneDeep } from 'lodash'
 import { boardsModel } from '~/models/boardsModel'
+import { cardModel } from '~/models/cardModel'
+import { columnModel } from '~/models/columnModel'
 import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/utils'
 
@@ -50,8 +52,33 @@ const update = async (id, body) => {
   }
 }
 
+const supportsMovingCard = async (body) => {
+  try {
+    await columnModel.update(body.prevColumneId, {
+      cardOrderIds: body.prevCardOrderIds,
+      updatedAt: Date.now()
+    })
+
+    await columnModel.update(body.nextColumneId, {
+      cardOrderIds: body.nextCardOrderIds,
+      updatedAt: Date.now()
+    })
+
+    await cardModel.update(body.currentCardId, {
+      columnId: body.nextColumneId,
+      updatedAt: Date.now()
+    })
+    return {
+      updated: true
+    }
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export const boardsService = {
   create,
   detail,
-  update
+  update,
+  supportsMovingCard
 }

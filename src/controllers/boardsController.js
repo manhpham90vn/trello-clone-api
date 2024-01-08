@@ -28,8 +28,18 @@ const update = async (req, res, next) => {
   }
 }
 
+const supportsMovingCard = async (req, res, next) => {
+  try {
+    const result = await boardsService.supportsMovingCard(req.body)
+    res.status(StatusCodes.OK).json(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const boardsController = {
   create,
   detail,
-  update
+  update,
+  supportsMovingCard
 }
