@@ -19,6 +19,26 @@ const create = async (req, res, next) => {
   }
 }
 
+const update = async (req, res, next) => {
+  const condition = Joi.object({
+    cardOrderIds: Joi.array()
+      .items(
+        Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE)
+      )
+      .required()
+  })
+  try {
+    await condition.validateAsync(req.body, {
+      abortEarly: false,
+      allowUnknown: true
+    })
+    next()
+  } catch (error) {
+    next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, error.message))
+  }
+}
+
 export const columnsValidation = {
-  create
+  create,
+  update
 }
